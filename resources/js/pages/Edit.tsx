@@ -3,11 +3,10 @@ import { usePosts } from '../hooks/usePosts';
 import { useState } from 'react';
 import PostGridDemo from '../components/PostGridDemo';
 import PostGridFeatures from '../components/PostGridFeatures';
-import Navbar from '../components/Navbar';
+import PageNavbar from '../components/PageNavbar';
 import FooterTechMax from '../section/Footer';
 import Alert from '../components/Alert';
 import DeleteModal from '../components/DeleteModal';
-import NavbarContent from '../components/NavbarContent';
 
 export default function Edit() {
     const navigate = useNavigate();
@@ -22,7 +21,7 @@ export default function Edit() {
                 ? 'Our Features'
                 : '';
 
-    const { posts, loading, refetch } = usePosts(sectionName);
+    const { posts, loading } = usePosts(sectionName);
 
     const [modal, setModal] = useState<{ visible: boolean; id: number | null }>({
         visible: false,
@@ -47,8 +46,17 @@ export default function Edit() {
 
         if (response.ok) {
             setModal({ visible: false, id: null });
-            showAlert('success', 'Successfully Deleted!');
-            refetch();
+
+            const hash =
+                section === 'unique-home-page'
+                    ? 'demo'
+                    : section === 'stunning-inner-pages'
+                      ? 'inner-pages'
+                      : section === 'our-features'
+                        ? 'features'
+                        : '';
+
+            navigate(hash ? { pathname: '/', hash } : '/', { replace: true });
         } else {
             showAlert('failed', 'Something went wrong.');
         }
@@ -56,10 +64,7 @@ export default function Edit() {
 
     return (
         <>
-            <Navbar />
-            <nav className="bg-white xl:px-50 lg:px-20 lg:py-8 p-8 shadow-md">
-                <NavbarContent variant="black" />
-            </nav>
+            <PageNavbar />
             <DeleteModal
                 visible={modal.visible}
                 onConfirm={handleConfirmDelete}
@@ -67,7 +72,7 @@ export default function Edit() {
             />
             <Alert type={alert.type} message={alert.message} visible={alert.visible} />
             <div className="mt-12">
-                <h1 className="text-center text-blue-700 font-bold text-3xl mb-12">{sectionName}</h1>
+                <h1 className="text-center text-brand font-bold text-3xl mb-12">{sectionName}</h1>
                 {section === 'our-features' ? (
                     <PostGridFeatures
                         posts={posts}

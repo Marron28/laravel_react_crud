@@ -1,4 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap');
 @import "tailwindcss";
+
+@theme {
+    --color-brand: #005de0;
+    --color-brand-dark: #0047ad;
+}
 
 .demo-item {
     transition:
@@ -16,14 +23,28 @@
 }
 
 .demo-item:hover .demo-footer {
-    background-color: #007bff;
+    background-color: #005de0;
 }
 
 .demo-item:hover .demo-footer h1 {
     color: #fff;
 }
 
+.feature-card {
+    background-color: #fff;
+    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.06);
+    transition:
+        box-shadow 0.4s ease,
+        transform 0.4s ease;
+}
+
+.feature-card:hover {
+    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+}
+
 #demo,
+#inner-pages,
 #features,
 #support {
     scroll-margin-top: 125px;
@@ -31,4 +52,25 @@
 
 html {
     scroll-behavior: smooth;
+}
+
+.nav-shell {
+    width: 100%;
+    padding: 2rem;
+}
+
+@media (min-width: 1024px) {
+    .nav-shell {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        padding-left: 5rem;
+        padding-right: 5rem;
+    }
+}
+
+@media (min-width: 1280px) {
+    .nav-shell {
+        padding-left: 12.5rem;
+        padding-right: 12.5rem;
+    }
 }

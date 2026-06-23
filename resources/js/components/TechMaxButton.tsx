@@ -7,7 +7,8 @@ type TechMaxButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
         | 'default'
         | 'defaultStylesred'
         | 'iconCircle'
-        | 'iconCircleStylesRed';
+        | 'iconCircleStylesRed'
+        | 'simple';
 };
 
 export default function TechMaxButton({
@@ -18,16 +19,19 @@ export default function TechMaxButton({
     ...props
 }: TechMaxButtonProps) {
     const defaultStyles =
-        'bg-blue-700 hover:bg-white hover:text-blue-700 text-white text-center text-sm font-bold py-3 px-6 rounded-md shadow-blue-800 shadow-sm transition-all duration-200 hover:shadow-lg cursor-pointer';
+        'bg-brand hover:bg-white hover:text-brand text-white text-center text-sm font-bold py-3 px-6 rounded-md shadow-brand-dark shadow-sm transition-all duration-200 hover:shadow-lg cursor-pointer';
 
     const defaultStylesred =
         'bg-red-600 hover:bg-white hover:text-red-600 text-white text-center text-sm font-bold py-3 px-6 rounded-md shadow-red-600 shadow-sm transition-all duration-200 hover:shadow-lg cursor-pointer';
 
     const iconCircleStyles =
-        'bg-blue-700 hover:bg-white hover:text-blue-700 text-white tex-center text-sm font-bold p-3 rounded-full shadow-blue-800 shadow-sm transition-all duration-300 hover:shadow-lg cursor-pointer';
+        'bg-brand hover:bg-white hover:text-brand text-white tex-center text-sm font-bold p-3 rounded-full shadow-brand-dark shadow-sm transition-all duration-300 hover:shadow-lg cursor-pointer';
 
     const iconCircleStylesRed =
         'bg-red-600 hover:bg-white hover:text-red-600 text-white tex-center text-sm font-bold p-3 rounded-full shadow-red-800 shadow-sm transition-all duration-300 hover:shadow-lg cursor-pointer';
+
+    const simpleStyles =
+        'bg-brand hover:bg-white hover:text-brand text-white text-center text-sm font-bold py-3 px-6 rounded-md transition-colors duration-200 cursor-pointer';
 
     const styles =
         variant === 'iconCircle'
@@ -36,7 +40,9 @@ export default function TechMaxButton({
               ? iconCircleStylesRed
               : variant === 'defaultStylesred'
                 ? defaultStylesred
-                : defaultStyles;
+                : variant === 'simple'
+                  ? simpleStyles
+                  : defaultStyles;
 
     return (
         <button type="button" className={`${styles} ${className}`} {...props}>

@@ -46,19 +46,14 @@ function DemoSection({
 
     return (
         <div className={className} id={id}>
-            <h1 className="text-center font-semibold xl:text-5xl text-4xl mb-4">
+            <h1 className="mb-12 text-center text-[48px] font-semibold text-[#333333] font-[Manrope,sans-serif]">
                 {section?.name ?? sectionName}
             </h1>
-            {section?.setting?.subtitle && (
-                <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto px-4">
-                    {section.setting.subtitle}
-                </p>
-            )}
-            {!section?.setting?.subtitle && <div className="mb-12" />}
             <PostGridDemo
                 posts={posts}
                 loading={postsLoading || sectionLoading}
                 emptyMessage={sectionName}
+                onEdit={(id) => navigate(`/edit-content/${id}`)}
             />
             <div className="flex justify-center gap-3 items-center mb-12">
                 <TechMaxButton onClick={() => navigate(editPath)} label="Edit" />
@@ -80,12 +75,14 @@ export default function UniqueHomePage() {
                 editPath="/edit/unique-home-page"
                 addPath="/add-unique-home-page"
                 id="demo"
-                className="pt-12 mb-24"
+                className="pt-20 pb-16"
             />
             <DemoSection
                 sectionName="Stunning Inner Pages"
                 editPath="/edit/stunning-inner-pages"
                 addPath="/add-stunning-inner-pages"
+                id="inner-pages"
+                className="pb-20"
             />
         </>
     );

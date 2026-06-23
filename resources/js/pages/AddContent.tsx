@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import Navbar from '../components/Navbar';
+import { useNavigate } from 'react-router-dom';
+import PageNavbar from '../components/PageNavbar';
 import Form from '../components/Form';
 import Alert from '../components/Alert';
-import NavbarContent from '../components/NavbarContent';
 import FooterTechMax from '../section/Footer';
 
 type AddContentProps = {
@@ -11,6 +11,7 @@ type AddContentProps = {
 };
 
 export default function AddContent({ sectionName, formTitle }: AddContentProps) {
+    const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState<File | null>(null);
@@ -62,10 +63,17 @@ export default function AddContent({ sectionName, formTitle }: AddContentProps) 
             }
 
             showAlert('success', 'Content added successfully!');
-            setTitle('');
-            setDescription('');
-            setImage(null);
-            setFormKey((prev) => prev + 1);
+
+            const hash =
+                sectionName === 'Unique Home Page'
+                    ? 'demo'
+                    : sectionName === 'Stunning Inner Pages'
+                      ? 'inner-pages'
+                      : sectionName === 'Our Features'
+                        ? 'features'
+                        : '';
+
+            navigate(hash ? { pathname: '/', hash } : '/', { replace: true });
         } catch {
             showAlert('failed', 'Network error — check your connection.');
         } finally {
@@ -75,10 +83,7 @@ export default function AddContent({ sectionName, formTitle }: AddContentProps) 
 
     return (
         <>
-            <Navbar />
-            <nav className="bg-white xl:px-50 lg:px-20 lg:py-8 p-8 shadow-md">
-                <NavbarContent variant="black" />
-            </nav>
+            <PageNavbar />
             <Alert type={alert.type} message={alert.message} visible={alert.visible} />
             <Form
                 key={formKey}

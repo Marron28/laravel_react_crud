@@ -9,14 +9,14 @@ export default function Alert({ type, message, visible }: AlertProps) {
 
     if (type === 'success') {
         return (
-            <div className="fixed top-6 right-6 flex items-center gap-3 bg-neutral-50 border-l-4 border-blue-700 shadow-sm shadow-blue-700 rounded-2xl p-6 min-w-sm z-50">
+            <div className="fixed top-6 right-6 flex items-center gap-3 bg-neutral-50 border-l-4 border-brand shadow-sm shadow-brand rounded-2xl p-6 min-w-sm z-50">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth="2"
                     stroke="currentColor"
-                    className="size-8 text-blue-700"
+                    className="size-8 text-brand"
                 >
                     <path
                         strokeLinecap="round"
@@ -25,7 +25,7 @@ export default function Alert({ type, message, visible }: AlertProps) {
                     />
                 </svg>
                 <div>
-                    <p className="font-bold text-blue-700 text-md">Success</p>
+                    <p className="font-bold text-brand text-md">Success</p>
                     <p className="text-gray-600 text-xs mt-0.5">{message}</p>
                 </div>
             </div>

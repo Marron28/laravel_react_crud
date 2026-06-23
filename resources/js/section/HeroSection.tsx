@@ -2,7 +2,7 @@ import NavbarContent from '../components/NavbarContent';
 import { useTypewriter } from '../components/Usetypewriter';
 
 const texts: string[] = [
-    'Modern trendy & Unique Design',
+    'Modern Trendy & Unique Design',
     'Built With Sass.',
     'Built on Bootstrap',
     'W3 Valid.',
@@ -14,6 +14,8 @@ const texts: string[] = [
     'Magnific Popup',
 ];
 
+const HERO_BG_URL = 'https://thepixelcurve.com/html/techmax/img/slider-img.jpg';
+
 export default function HeroSection() {
     const text = useTypewriter(texts, {
         typingSpeed: 200,
@@ -24,25 +26,25 @@ export default function HeroSection() {
 
     return (
         <div
-            className="h-150 bg-center bg-cover bg-black/70 bg-blend-multiply flex flex-col"
+            className="relative flex min-h-[550px] flex-col bg-cover bg-center lg:min-h-[600px]"
             style={{
-                backgroundImage:
-                    'linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&q=80)',
+                backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(${HERO_BG_URL})`,
             }}
             id="main"
         >
-            <nav className="xl:px-50 lg:px-20 lg:py-8 p-8 text-white">
+            <nav className="nav-shell text-white">
                 <NavbarContent variant="white" />
             </nav>
-            <div className="text-center m-auto">
-                <span className="text-sm lg:text-md font-bold tracking-wider text-blue-700">
+            <div className="flex flex-1 flex-col items-center justify-center px-6 pb-20 pt-8 text-center lg:px-16 lg:pb-28">
+                <p className="mb-3 font-['Nunito_Sans',sans-serif] text-[17px] font-semibold tracking-wide text-brand">
                     {text}
-                </span>
-                <span className="font-light tracking-wider text-sm md:text-lg text-white">|</span>
-                <h1 className="lg:text-5xl text-3xl text-white font-bold text-center">
-                    Techmax - Technology Business Consultant
-                    <br />
-                    HTML5 Template
+                    <span className="ml-0.5">|</span>
+                </p>
+                <h1 className="font-['Manrope',sans-serif] text-[1.5rem] font-bold leading-[35px] text-white md:text-[2.15rem] md:leading-[52px] lg:text-[2.7rem] lg:leading-[65px]">
+                    <span className="block whitespace-normal lg:whitespace-nowrap">
+                        Techmax - Technology Business Consultant
+                    </span>
+                    <span className="block">HTML5 Template</span>
                 </h1>
             </div>
         </div>

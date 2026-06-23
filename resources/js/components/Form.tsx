@@ -39,7 +39,7 @@ export default function Form({
             onSubmit={onSubmit}
             className="flex flex-col justify-self-center my-12 xl:p-12 lg:p-14 md:p-10 xs:w-xs xl:w-3xl w-2xs lg:w-4xl md:w-2xl p-6 bg-olive-50 rounded-lg shadow-lg"
         >
-            <h1 className="text-center text-blue-700 font-bold text-3xl mb-12">{title}</h1>
+            <h1 className="text-center text-brand font-bold text-3xl mb-12">{title}</h1>
             <label htmlFor="title" className="text-lg font-bold mb-2">
                 Title
             </label>
@@ -50,7 +50,7 @@ export default function Form({
                 onChange={onTitleChange}
                 placeholder="Title"
                 autoComplete="off"
-                className="font-semibold bg-white border border-gray-300 rounded-md mb-3 p-4 focus:ring-blue-700 focus:outline-none focus:ring-1 hover:border-blue-700"
+                className="font-semibold bg-white border border-gray-300 rounded-md mb-3 p-4 focus:ring-brand focus:outline-none focus:ring-1 hover:border-brand"
             />
             <label htmlFor="description" className="text-lg font-bold mb-2">
                 Description
@@ -60,7 +60,7 @@ export default function Form({
                 value={descriptionValue}
                 onChange={onDescriptionChange}
                 placeholder="Description"
-                className="font-semibold bg-white border border-gray-300 rounded-md mb-3 px-4 pt-4 overflow-hidden pb-6 resize-none focus:ring-blue-700 focus:outline-none focus:ring-1 hover:border-blue-700"
+                className="font-semibold bg-white border border-gray-300 rounded-md mb-3 px-4 pt-4 overflow-hidden pb-6 resize-none focus:ring-brand focus:outline-none focus:ring-1 hover:border-brand"
             />
             <label className="text-lg font-bold mb-2">Image</label>
             <label htmlFor="image" className="cursor-pointer mb-6">
@@ -77,7 +77,7 @@ export default function Form({
                         className="py-2 w-full h-56 object-contain rounded-xl border border-gray-300"
                     />
                 ) : (
-                    <div className="w-full h-56 rounded-xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center gap-2 hover:border-blue-700 transition">
+                    <div className="w-full h-56 rounded-xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center gap-2 hover:border-brand transition">
                         <p className="text-gray-400 text-sm font-semibold">Click to upload image</p>
                         <p className="text-gray-300 text-xs">PNG, JPG, WEBP up to 2MB</p>
                     </div>

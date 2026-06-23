@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TechMaxButton from './TechMaxButton';
 
 interface Post {
@@ -8,25 +8,55 @@ interface Post {
     image: string | null;
 }
 
-function PostCard({ post, isEditMode }: { post: Post; isEditMode: boolean }) {
-    const [imageLoaded, setImageLoaded] = useState(false);
+function PostCard({
+    post,
+    isEditMode,
+    onClick,
+}: {
+    post: Post;
+    isEditMode: boolean;
+    onClick?: () => void;
+}) {
+    const [imageLoaded, setImageLoaded] = useState(!post.image);
+
+    useEffect(() => {
+        setImageLoaded(!post.image);
+    }, [post.id, post.image]);
 
     return (
         <div
-            className={`${isEditMode ? 'shadow-2xl' : 'demo-item'} relative overflow-hidden rounded-xl`}
+            role={onClick ? 'button' : undefined}
+            tabIndex={onClick ? 0 : undefined}
+            onClick={onClick}
+            onKeyDown={
+                onClick
+                    ? (e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
+                              onClick();
+                          }
+                      }
+                    : undefined
+            }
+            className={`${isEditMode ? 'shadow-2xl' : 'demo-item'} relative overflow-hidden rounded-xl ${onClick ? 'cursor-pointer' : ''}`}
         >
-            {!imageLoaded && (
-                <div className="relative w-full aspect-3/3 bg-gray-200 animate-pulse" />
-            )}
-            <div
-                className={`relative w-full aspect-3/3 ${!imageLoaded ? 'hidden' : ''}`}
-            >
-                    <img
-                        src={`/storage/${post.image}`}
-                        alt={post.title}
-                        className="absolute inset-0 w-full h-full object-cover"
-                        onLoad={() => setImageLoaded(true)}
-                    />
+            <div className="relative w-full aspect-3/3">
+                {post.image ? (
+                    <>
+                        {!imageLoaded && (
+                            <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+                        )}
+                        <img
+                            src={`/storage/${post.image}`}
+                            alt={post.title}
+                            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                            onLoad={() => setImageLoaded(true)}
+                            onError={() => setImageLoaded(true)}
+                        />
+                    </>
+                ) : (
+                    <div className="absolute inset-0 bg-gray-200" />
+                )}
             </div>
             <div className="border-t border-slate-200 demo-footer p-5 lg:text-2xl xl:text-2xl bg-white h-21 text-center">
                 <h1>{post.title}</h1>
@@ -71,7 +101,15 @@ export default function PostGridDemo({
             ) : (
                 posts.map((post) => (
                     <div key={post.id}>
-                        <PostCard post={post} isEditMode={isEditMode} />
+                        <PostCard
+                            post={post}
+                            isEditMode={isEditMode}
+                            onClick={
+                                !isEditMode && onEdit
+                                    ? () => onEdit(post.id)
+                                    : undefined
+                            }
+                        />
                         {isEditMode && (
                             <div className="flex justify-center items-center gap-5 mt-6">
                                 <TechMaxButton label="Edit" onClick={() => onEdit?.(post.id)} />

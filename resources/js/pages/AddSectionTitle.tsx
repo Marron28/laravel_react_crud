@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
+import PageNavbar from '../components/PageNavbar';
 import TechMaxButton from '../components/TechMaxButton';
 import Alert from '../components/Alert';
 import type { PageSection } from '../types/sections';
@@ -146,13 +146,13 @@ export default function AddSectionTitle() {
 
     return (
         <>
-            <Navbar />
+            <PageNavbar />
             <Alert type={alert.type} message={alert.message} visible={alert.visible} />
             <form
                 onSubmit={handleSubmit}
                 className="flex flex-col justify-self-center m-12 p-12 bg-olive-50 rounded-lg shadow-lg w-3xl"
             >
-                <h1 className="text-center text-blue-700 font-bold text-3xl mb-12">
+                <h1 className="text-center text-brand font-bold text-3xl mb-12">
                     Add Section Title
                 </h1>
                 <label htmlFor="section_title" className="text-lg font-bold mb-2">
@@ -164,7 +164,7 @@ export default function AddSectionTitle() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Section Title"
-                    className="font-semibold bg-white border border-gray-300 rounded-md mb-3 p-4 focus:ring-blue-700 focus:outline-none focus:ring-1 hover:border-blue-700"
+                    className="font-semibold bg-white border border-gray-300 rounded-md mb-3 p-4 focus:ring-brand focus:outline-none focus:ring-1 hover:border-brand"
                     autoComplete="off"
                 />
                 <label htmlFor="section_subtitle" className="text-lg font-bold mb-2">
@@ -176,7 +176,7 @@ export default function AddSectionTitle() {
                     value={subtitle}
                     onChange={(e) => setSubtitle(e.target.value)}
                     placeholder="Optional subtitle"
-                    className="font-semibold bg-white border border-gray-300 rounded-md mb-3 p-4 focus:ring-blue-700 focus:outline-none focus:ring-1 hover:border-blue-700"
+                    className="font-semibold bg-white border border-gray-300 rounded-md mb-3 p-4 focus:ring-brand focus:outline-none focus:ring-1 hover:border-brand"
                     autoComplete="off"
                 />
                 <TechMaxButton
@@ -189,9 +189,9 @@ export default function AddSectionTitle() {
             {editingId !== null && (
                 <form
                     onSubmit={handleUpdate}
-                    className="flex flex-col justify-self-center mx-12 mb-12 p-12 bg-white rounded-lg shadow-lg w-3xl border border-blue-700"
+                    className="flex flex-col justify-self-center mx-12 mb-12 p-12 bg-white rounded-lg shadow-lg w-3xl border border-brand"
                 >
-                    <h2 className="text-center text-blue-700 font-bold text-2xl mb-8">
+                    <h2 className="text-center text-brand font-bold text-2xl mb-8">
                         Edit Section
                     </h2>
                     <label htmlFor="edit_section_title" className="text-lg font-bold mb-2">
@@ -202,7 +202,7 @@ export default function AddSectionTitle() {
                         id="edit_section_title"
                         value={editName}
                         onChange={(e) => setEditName(e.target.value)}
-                        className="font-semibold bg-white border border-gray-300 rounded-md mb-3 p-4 focus:ring-blue-700 focus:outline-none focus:ring-1 hover:border-blue-700"
+                        className="font-semibold bg-white border border-gray-300 rounded-md mb-3 p-4 focus:ring-brand focus:outline-none focus:ring-1 hover:border-brand"
                         autoComplete="off"
                     />
                     <label htmlFor="edit_section_subtitle" className="text-lg font-bold mb-2">
@@ -213,7 +213,7 @@ export default function AddSectionTitle() {
                         id="edit_section_subtitle"
                         value={editSubtitle}
                         onChange={(e) => setEditSubtitle(e.target.value)}
-                        className="font-semibold bg-white border border-gray-300 rounded-md mb-3 p-4 focus:ring-blue-700 focus:outline-none focus:ring-1 hover:border-blue-700"
+                        className="font-semibold bg-white border border-gray-300 rounded-md mb-3 p-4 focus:ring-brand focus:outline-none focus:ring-1 hover:border-brand"
                         autoComplete="off"
                     />
                     <label className="flex items-center gap-2 mb-6 text-lg font-bold">
@@ -262,7 +262,7 @@ export default function AddSectionTitle() {
                             <button
                                 type="button"
                                 onClick={() => startEdit(section.id)}
-                                className="text-blue-700 font-bold text-sm cursor-pointer"
+                                className="text-brand font-bold text-sm cursor-pointer"
                             >
                                 Edit
                             </button>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TechMaxButton from './TechMaxButton';
 
 interface Post {
@@ -8,29 +8,47 @@ interface Post {
     image: string | null;
 }
 
-function PostCard({ post }: { post: Post }) {
-    const [imageLoaded, setImageLoaded] = useState(false);
+function PostCard({ post, onClick }: { post: Post; onClick?: () => void }) {
+    const [imageLoaded, setImageLoaded] = useState(!post.image);
+
+    useEffect(() => {
+        setImageLoaded(!post.image);
+    }, [post.id, post.image]);
 
     return (
-        <div className="flex flex-col items-center py-12 justify-center shadow-lg hover:shadow-2xl transition-all duration-300 h-50">
-            {post.image && !imageLoaded && (
-                <div className="w-16 h-16 bg-gray-200 animate-pulse rounded-md mb-auto" />
-            )}
+        <div
+            role={onClick ? 'button' : undefined}
+            tabIndex={onClick ? 0 : undefined}
+            onClick={onClick}
+            onKeyDown={
+                onClick
+                    ? (e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
+                              onClick();
+                          }
+                      }
+                    : undefined
+            }
+            className={`feature-card flex h-full min-h-[200px] flex-col items-center justify-center bg-white px-4 py-10 text-center ${onClick ? 'cursor-pointer' : ''}`}
+        >
             {post.image ? (
-                <img
-                    src={`/storage/${post.image}`}
-                    alt={post.title}
-                    className={`m-auto max-h-16 ${!imageLoaded ? 'hidden' : ''}`}
-                    onLoad={() => setImageLoaded(true)}
-                />
+                <div className="relative mb-auto flex min-h-16 items-center justify-center">
+                    {!imageLoaded && (
+                        <div className="h-16 w-16 animate-pulse rounded-md bg-gray-200" />
+                    )}
+                    <img
+                        src={`/storage/${post.image}`}
+                        alt={post.title}
+                        className={`m-auto max-h-16 transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'absolute opacity-0'}`}
+                        onLoad={() => setImageLoaded(true)}
+                        onError={() => setImageLoaded(true)}
+                    />
+                </div>
             ) : (
-                <div className="w-16 h-16 bg-gray-100 rounded-md mb-auto" />
+                <div className="mb-auto h-16 w-16 rounded-md bg-gray-100" />
             )}
-            {!imageLoaded && post.image ? (
-                <div className="h-4 bg-gray-200 animate-pulse rounded w-3/4 mt-auto" />
-            ) : (
-                <h1 className="text-xl font-semibold mt-auto">{post.title}</h1>
-            )}
+            <h1 className="mt-auto text-lg font-semibold text-[#333333]">{post.title}</h1>
         </div>
     );
 }
@@ -53,7 +71,7 @@ export default function PostGridFeatures({
     onEdit,
 }: PostGridProps) {
     return (
-        <div className="grid xl:px-52 px-8 my-12 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 text-center items-center justify-center">
+        <div className="grid grid-cols-1 items-stretch gap-5 px-8 my-12 md:grid-cols-2 lg:grid-cols-3 xl:px-52">
             {loading ? (
                 Array.from({ length: 10 }).map((_, i) => (
                     <PostCard
@@ -62,17 +80,24 @@ export default function PostGridFeatures({
                     />
                 ))
             ) : posts.length === 0 ? (
-                <div className="col-span-3 text-center py-24">
-                    <h2 className="text-gray-400 text-3xl font-semibold">
+                <div className="col-span-full py-24 text-center">
+                    <h2 className="text-3xl font-semibold text-gray-400">
                         Add {emptyMessage} First
                     </h2>
                 </div>
             ) : (
                 posts.map((post) => (
-                    <div key={post.id}>
-                        <PostCard post={post} />
+                    <div key={post.id} className="h-full">
+                        <PostCard
+                            post={post}
+                            onClick={
+                                !isEditMode && onEdit
+                                    ? () => onEdit(post.id)
+                                    : undefined
+                            }
+                        />
                         {isEditMode && (
-                            <div className="flex justify-center items-center gap-5 mt-6">
+                            <div className="mt-6 flex items-center justify-center gap-5">
                                 <TechMaxButton label="Edit" onClick={() => onEdit?.(post.id)} />
                                 <TechMaxButton
                                     onClick={() => onDelete?.(post.id)}

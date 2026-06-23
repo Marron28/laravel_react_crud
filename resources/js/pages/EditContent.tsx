@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import NavbarContent from '../components/NavbarContent';
+import PageNavbar from '../components/PageNavbar';
 import Form from '../components/Form';
 import Alert from '../components/Alert';
 import FooterTechMax from '../section/Footer';
@@ -83,10 +82,7 @@ export default function EditContent() {
 
     return (
         <>
-            <Navbar />
-            <nav className="bg-white xl:px-50 lg:px-20 lg:py-8 p-8 shadow-md">
-                <NavbarContent variant="black" />
-            </nav>
+            <PageNavbar />
             <Alert type={alert.type} message={alert.message} visible={alert.visible} />
             <Form
                 key={formKey}
