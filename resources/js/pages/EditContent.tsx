@@ -127,6 +127,7 @@ export default function EditContent() {
                 submitLabel="Update"
                 loading={loading}
                 onDelete={() => setDeleteModalVisible(true)}
+                onBack={() => navigate(`/view-content/${id}`)}
             />
             <FooterTechMax />
         </>

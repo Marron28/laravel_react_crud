@@ -13,6 +13,7 @@ type FormProps = {
     loading?: boolean;
     submitLabel?: string;
     onDelete?: () => void;
+    onBack?: () => void;
 };
 
 export default function Form({
@@ -27,6 +28,7 @@ export default function Form({
     loading = false,
     submitLabel = 'Submit',
     onDelete,
+    onBack,
 }: FormProps) {
     const [preview, setPreview] = useState<string | null>(null);
 
@@ -94,20 +96,25 @@ export default function Form({
                 />
             </label>
             <div className="mt-8 flex items-center justify-between gap-4">
-                {onDelete ? (
-                    <TechMaxButton
-                        type="button"
-                        variant="defaultStylesred"
-                        label="Delete"
-                        onClick={onDelete}
-                    />
+                {onBack ? (
+                    <TechMaxButton type="button" label="Back" onClick={onBack} />
                 ) : (
                     <span />
                 )}
-                <TechMaxButton
-                    type="submit"
-                    label={loading ? 'Submitting...' : submitLabel}
-                />
+                <div className="flex items-center gap-4">
+                    {onDelete && (
+                        <TechMaxButton
+                            type="button"
+                            variant="defaultStylesred"
+                            label="Delete"
+                            onClick={onDelete}
+                        />
+                    )}
+                    <TechMaxButton
+                        type="submit"
+                        label={loading ? 'Submitting...' : submitLabel}
+                    />
+                </div>
             </div>
             </form>
         </div>

@@ -45,10 +45,10 @@ export default function OurFeatures() {
                 posts={posts}
                 loading={postsLoading || sectionLoading}
                 emptyMessage="Our Features"
-                onEdit={(id) => navigate(`/edit-content/${id}`)}
+                onView={(id) => navigate(`/view-content/${id}`)}
             />
             <div className="flex justify-center gap-5 items-center mb-12">
-                <TechMaxButton onClick={() => navigate('/edit/our-features')} label="Edit" />
+                <TechMaxButton onClick={() => navigate('/edit/our-features')} label="View all awesome features" />
                 <TechMaxButton
                     onClick={() => navigate('/add-features')}
                     variant="iconCircle"

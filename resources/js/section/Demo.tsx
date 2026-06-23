@@ -25,6 +25,7 @@ type DemoSectionProps = {
     sectionName: string;
     editPath: string;
     addPath: string;
+    viewAllLabel: string;
     id?: string;
     className?: string;
 };
@@ -33,6 +34,7 @@ function DemoSection({
     sectionName,
     editPath,
     addPath,
+    viewAllLabel,
     id,
     className = 'pt-12',
 }: DemoSectionProps) {
@@ -53,10 +55,10 @@ function DemoSection({
                 posts={posts}
                 loading={postsLoading || sectionLoading}
                 emptyMessage={sectionName}
-                onEdit={(id) => navigate(`/edit-content/${id}`)}
+                onView={(id) => navigate(`/view-content/${id}`)}
             />
             <div className="flex justify-center gap-3 items-center mb-12">
-                <TechMaxButton onClick={() => navigate(editPath)} label="Edit" />
+                <TechMaxButton onClick={() => navigate(editPath)} label={viewAllLabel} />
                 <TechMaxButton
                     onClick={() => navigate(addPath)}
                     variant="iconCircle"
@@ -74,6 +76,7 @@ export default function UniqueHomePage() {
                 sectionName="Unique Home Page"
                 editPath="/edit/unique-home-page"
                 addPath="/add-unique-home-page"
+                viewAllLabel="View all unique home page"
                 id="demo"
                 className="pt-20 pb-16"
             />
@@ -81,6 +84,7 @@ export default function UniqueHomePage() {
                 sectionName="Stunning Inner Pages"
                 editPath="/edit/stunning-inner-pages"
                 addPath="/add-stunning-inner-pages"
+                viewAllLabel="View all stunning inner pages"
                 id="inner-pages"
                 className="pb-20"
             />

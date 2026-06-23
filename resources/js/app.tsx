@@ -7,6 +7,7 @@ import AddContent from './pages/AddContent';
 import AddSectionTitle from './pages/AddSectionTitle';
 import Edit from './pages/Edit';
 import EditContent from './pages/EditContent';
+import ViewContent from './pages/ViewContent';
 
 const container = document.getElementById('app')!;
 
@@ -42,6 +43,7 @@ createRoot(container).render(
                 }
             />
             <Route path="/edit/:section" element={<Edit />} />
+            <Route path="/view-content/:id" element={<ViewContent />} />
             <Route path="/edit-content/:id" element={<EditContent />} />
             <Route path="/add-section-title" element={<AddSectionTitle />} />
         </Routes>

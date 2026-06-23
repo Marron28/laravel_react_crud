@@ -72,6 +72,7 @@ type PostGridProps = {
     emptyMessage?: string;
     onDelete?: (id: number) => void;
     onEdit?: (id: number) => void;
+    onView?: (id: number) => void;
 };
 
 export default function PostGridDemo({
@@ -81,6 +82,7 @@ export default function PostGridDemo({
     emptyMessage,
     onDelete,
     onEdit,
+    onView,
 }: PostGridProps) {
     return (
         <div className="mb-12 grid grid-cols-1 items-start justify-center gap-x-5 gap-y-10 px-8 text-center md:grid-cols-2 lg:grid-cols-3 xl:px-44">
@@ -105,8 +107,8 @@ export default function PostGridDemo({
                             post={post}
                             isEditMode={isEditMode}
                             onClick={
-                                !isEditMode && onEdit
-                                    ? () => onEdit(post.id)
+                                !isEditMode && onView
+                                    ? () => onView(post.id)
                                     : undefined
                             }
                         />
