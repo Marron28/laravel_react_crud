@@ -15,7 +15,6 @@ export default function AddContent({ sectionName, formTitle }: AddContentProps) 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState<File | null>(null);
-    const [formKey, setFormKey] = useState(0);
     const [loading, setLoading] = useState(false);
     const [alert, setAlert] = useState<{
         type: 'success' | 'failed';
@@ -86,7 +85,6 @@ export default function AddContent({ sectionName, formTitle }: AddContentProps) 
             <PageNavbar />
             <Alert type={alert.type} message={alert.message} visible={alert.visible} />
             <Form
-                key={formKey}
                 title={formTitle}
                 onSubmit={handleSubmit}
                 titleValue={title}

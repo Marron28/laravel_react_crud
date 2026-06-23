@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface Post {
     id: number;
@@ -11,7 +11,7 @@ export function usePosts(sectionName: string) {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchPosts = () => {
+    const fetchPosts = useCallback(() => {
         setLoading(true);
         fetch(`/api/posts?section=${encodeURIComponent(sectionName)}`)
             .then((res) => res.json())
@@ -19,11 +19,11 @@ export function usePosts(sectionName: string) {
                 setPosts(data);
                 setLoading(false);
             });
-    };
+    }, [sectionName]);
 
     useEffect(() => {
         fetchPosts();
-    }, [sectionName]);
+    }, [fetchPosts]);
 
     return { posts, loading, refetch: fetchPosts };
 }
