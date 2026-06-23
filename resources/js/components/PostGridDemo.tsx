@@ -83,7 +83,7 @@ export default function PostGridDemo({
     onEdit,
 }: PostGridProps) {
     return (
-        <div className="grid xl:px-44 px-8 gap-x-5 gap-y-15 mb-12 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 text-center items-center justify-center">
+        <div className="mb-12 grid grid-cols-1 items-start justify-center gap-x-5 gap-y-10 px-8 text-center md:grid-cols-2 lg:grid-cols-3 xl:px-44">
             {loading ? (
                 Array.from({ length: 9 }).map((_, i) => (
                     <PostCard
@@ -100,7 +100,7 @@ export default function PostGridDemo({
                 </div>
             ) : (
                 posts.map((post) => (
-                    <div key={post.id}>
+                    <div key={post.id} className="flex flex-col gap-6">
                         <PostCard
                             post={post}
                             isEditMode={isEditMode}
@@ -111,7 +111,7 @@ export default function PostGridDemo({
                             }
                         />
                         {isEditMode && (
-                            <div className="flex justify-center items-center gap-5 mt-6">
+                            <div className="flex items-center justify-center gap-5">
                                 <TechMaxButton label="Edit" onClick={() => onEdit?.(post.id)} />
                                 <TechMaxButton
                                     onClick={() => onDelete?.(post.id)}

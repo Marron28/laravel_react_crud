@@ -12,6 +12,7 @@ type FormProps = {
     existingImage?: string | null;
     loading?: boolean;
     submitLabel?: string;
+    onDelete?: () => void;
 };
 
 export default function Form({
@@ -25,6 +26,7 @@ export default function Form({
     existingImage,
     loading = false,
     submitLabel = 'Submit',
+    onDelete,
 }: FormProps) {
     const [preview, setPreview] = useState<string | null>(null);
 
@@ -35,10 +37,11 @@ export default function Form({
     };
 
     return (
-        <form
-            onSubmit={onSubmit}
-            className="flex flex-col justify-self-center my-12 xl:p-12 lg:p-14 md:p-10 xs:w-xs xl:w-3xl w-2xs lg:w-4xl md:w-2xl p-6 bg-olive-50 rounded-lg shadow-lg"
-        >
+        <div className="flex justify-center px-4 py-12 sm:px-6">
+            <form
+                onSubmit={onSubmit}
+                className="flex w-full max-w-2xl flex-col rounded-lg bg-white p-6 shadow-lg md:p-10"
+            >
             <h1 className="text-center text-brand font-bold text-3xl mb-12">{title}</h1>
             <label htmlFor="title" className="text-lg font-bold mb-2">
                 Title
@@ -90,11 +93,23 @@ export default function Form({
                     className="hidden"
                 />
             </label>
-            <TechMaxButton
-                type="submit"
-                label={loading ? 'Submitting...' : submitLabel}
-                className="ml-auto mt-auto"
-            />
-        </form>
+            <div className="mt-8 flex items-center justify-between gap-4">
+                {onDelete ? (
+                    <TechMaxButton
+                        type="button"
+                        variant="defaultStylesred"
+                        label="Delete"
+                        onClick={onDelete}
+                    />
+                ) : (
+                    <span />
+                )}
+                <TechMaxButton
+                    type="submit"
+                    label={loading ? 'Submitting...' : submitLabel}
+                />
+            </div>
+            </form>
+        </div>
     );
 }

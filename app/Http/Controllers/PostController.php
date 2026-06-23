@@ -35,7 +35,12 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return response()->json($post);
+        $post->load('pageSection');
+
+        return response()->json([
+            ...$post->toArray(),
+            'section_name' => $post->pageSection?->name,
+        ]);
     }
 
     public function update(Request $request, Post $post)

@@ -71,7 +71,7 @@ export default function Edit() {
                 onCancel={() => setModal({ visible: false, id: null })}
             />
             <Alert type={alert.type} message={alert.message} visible={alert.visible} />
-            <div className="mt-12">
+            <div className="mt-12 pb-20">
                 <h1 className="text-center text-brand font-bold text-3xl mb-12">{sectionName}</h1>
                 {section === 'our-features' ? (
                     <PostGridFeatures

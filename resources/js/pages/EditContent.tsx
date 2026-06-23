@@ -1,19 +1,30 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import PageNavbar from '../components/PageNavbar';
 import Form from '../components/Form';
 import Alert from '../components/Alert';
+import DeleteModal from '../components/DeleteModal';
 import FooterTechMax from '../section/Footer';
 
+function getSectionHash(sectionName: string): string {
+    if (sectionName === 'Unique Home Page') return 'demo';
+    if (sectionName === 'Stunning Inner Pages') return 'inner-pages';
+    if (sectionName === 'Our Features') return 'features';
+    return '';
+}
+
 export default function EditContent() {
+    const navigate = useNavigate();
     const { id } = useParams();
     const [existingImage, setExistingImage] = useState<string | null>(null);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [sectionName, setSectionName] = useState('');
     const [image, setImage] = useState<File | null>(null);
     const [formTitle, setFormTitle] = useState('Edit Content');
     const [formKey, setFormKey] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [deleteModalVisible, setDeleteModalVisible] = useState(false);
     const [alert, setAlert] = useState<{
         type: 'success' | 'failed';
         message: string;
@@ -32,6 +43,7 @@ export default function EditContent() {
                 setTitle(data.title);
                 setDescription(data.description);
                 setExistingImage(data.image);
+                setSectionName(data.section_name ?? '');
                 setFormTitle(`Editing ${data.title}`);
             });
     }, [id]);
@@ -80,9 +92,27 @@ export default function EditContent() {
         }
     };
 
+    const handleConfirmDelete = async () => {
+        const response = await fetch(`/api/posts/${id}`, { method: 'DELETE' });
+
+        if (!response.ok) {
+            showAlert('failed', 'Something went wrong.');
+            setDeleteModalVisible(false);
+            return;
+        }
+
+        const hash = getSectionHash(sectionName);
+        navigate(hash ? { pathname: '/', hash } : '/', { replace: true });
+    };
+
     return (
         <>
             <PageNavbar />
+            <DeleteModal
+                visible={deleteModalVisible}
+                onConfirm={handleConfirmDelete}
+                onCancel={() => setDeleteModalVisible(false)}
+            />
             <Alert type={alert.type} message={alert.message} visible={alert.visible} />
             <Form
                 key={formKey}
@@ -96,6 +126,7 @@ export default function EditContent() {
                 existingImage={existingImage}
                 submitLabel="Update"
                 loading={loading}
+                onDelete={() => setDeleteModalVisible(true)}
             />
             <FooterTechMax />
         </>
