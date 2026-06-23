@@ -3,10 +3,17 @@ import { usePosts } from '../hooks/usePosts';
 import { useState } from 'react';
 import PostGridDemo from '../components/PostGridDemo';
 import PostGridFeatures from '../components/PostGridFeatures';
-import PageNavbar from '../components/PageNavbar';
+import PageHero from '../components/PageHero';
 import FooterTechMax from '../section/Footer';
 import Alert from '../components/Alert';
 import DeleteModal from '../components/DeleteModal';
+
+function getViewAllHeroTitle(section: string | undefined, sectionName: string) {
+    if (section === 'our-features') {
+        return 'Awesome Features';
+    }
+    return sectionName;
+}
 
 export default function Edit() {
     const navigate = useNavigate();
@@ -64,15 +71,16 @@ export default function Edit() {
 
     return (
         <>
-            <PageNavbar />
+            <PageHero title={getViewAllHeroTitle(section, sectionName)} />
             <DeleteModal
                 visible={modal.visible}
                 onConfirm={handleConfirmDelete}
                 onCancel={() => setModal({ visible: false, id: null })}
             />
             <Alert type={alert.type} message={alert.message} visible={alert.visible} />
-            <div className="mt-12 pb-20">
-                <h1 className="text-center text-brand font-bold text-3xl mb-12">{sectionName}</h1>
+            <div
+                className={`pt-16 pb-20 sm:pt-20 ${section === 'our-features' ? 'bg-[#fafafa]' : ''}`}
+            >
                 {section === 'our-features' ? (
                     <PostGridFeatures
                         posts={posts}

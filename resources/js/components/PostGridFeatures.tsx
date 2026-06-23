@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import TechMaxButton from './TechMaxButton';
+import ImagePlaceholder from './ImagePlaceholder';
 
 interface Post {
     id: number;
@@ -46,7 +47,9 @@ function PostCard({ post, onClick }: { post: Post; onClick?: () => void }) {
                     />
                 </div>
             ) : (
-                <div className="mb-auto h-16 w-16 rounded-md bg-gray-100" />
+                <div className="relative mb-auto flex min-h-16 items-center justify-center">
+                    <ImagePlaceholder variant="icon" />
+                </div>
             )}
             <h1 className="mt-auto text-lg font-semibold text-[#333333]">{post.title}</h1>
         </div>

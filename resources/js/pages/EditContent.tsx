@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import PageNavbar from '../components/PageNavbar';
+import PageHero from '../components/PageHero';
 import Form from '../components/Form';
 import Alert from '../components/Alert';
 import DeleteModal from '../components/DeleteModal';
@@ -21,9 +21,11 @@ export default function EditContent() {
     const [description, setDescription] = useState('');
     const [sectionName, setSectionName] = useState('');
     const [image, setImage] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [formTitle, setFormTitle] = useState('Edit Content');
     const [formKey, setFormKey] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [dataLoading, setDataLoading] = useState(true);
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
     const [alert, setAlert] = useState<{
         type: 'success' | 'failed';
@@ -45,8 +47,21 @@ export default function EditContent() {
                 setExistingImage(data.image);
                 setSectionName(data.section_name ?? '');
                 setFormTitle(`Editing ${data.title}`);
-            });
+            })
+            .finally(() => setDataLoading(false));
     }, [id]);
+
+    useEffect(() => {
+        if (!image) {
+            setImagePreview(null);
+            return;
+        }
+
+        const previewUrl = URL.createObjectURL(image);
+        setImagePreview(previewUrl);
+
+        return () => URL.revokeObjectURL(previewUrl);
+    }, [image]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -85,6 +100,7 @@ export default function EditContent() {
             showAlert('success', 'Content updated successfully!');
             setFormKey((prev) => prev + 1);
             setExistingImage(data.image);
+            setImage(null);
         } catch {
             showAlert('failed', 'Network error — check your connection.');
         } finally {
@@ -105,9 +121,25 @@ export default function EditContent() {
         navigate(hash ? { pathname: '/', hash } : '/', { replace: true });
     };
 
+    if (dataLoading) {
+        return (
+            <>
+                <div className="flex min-h-[50vh] items-center justify-center px-4 py-24">
+                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-brand border-t-transparent" />
+                </div>
+                <FooterTechMax />
+            </>
+        );
+    }
+
     return (
         <>
-            <PageNavbar />
+            <PageHero
+                title={title}
+                image={imagePreview ? null : existingImage}
+                imageUrl={imagePreview}
+                usePlaceholderWhenNoImage
+            />
             <DeleteModal
                 visible={deleteModalVisible}
                 onConfirm={handleConfirmDelete}
@@ -117,6 +149,7 @@ export default function EditContent() {
             <Form
                 key={formKey}
                 title={formTitle}
+                showPageTitle={false}
                 onSubmit={handleSubmit}
                 titleValue={title}
                 descriptionValue={description}

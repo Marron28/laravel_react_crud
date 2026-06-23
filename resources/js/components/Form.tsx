@@ -14,6 +14,7 @@ type FormProps = {
     submitLabel?: string;
     onDelete?: () => void;
     onBack?: () => void;
+    showPageTitle?: boolean;
 };
 
 export default function Form({
@@ -29,6 +30,7 @@ export default function Form({
     submitLabel = 'Submit',
     onDelete,
     onBack,
+    showPageTitle = true,
 }: FormProps) {
     const [preview, setPreview] = useState<string | null>(null);
 
@@ -44,7 +46,9 @@ export default function Form({
                 onSubmit={onSubmit}
                 className="flex w-full max-w-2xl flex-col rounded-lg bg-white p-6 shadow-lg md:p-10"
             >
-            <h1 className="text-center text-brand font-bold text-3xl mb-12">{title}</h1>
+            {showPageTitle && (
+                <h1 className="mb-12 text-center text-3xl font-bold text-brand">{title}</h1>
+            )}
             <label htmlFor="title" className="text-lg font-bold mb-2">
                 Title
             </label>

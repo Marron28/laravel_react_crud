@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import TechMaxButton from './TechMaxButton';
+import ImagePlaceholder from './ImagePlaceholder';
 
 interface Post {
     id: number;
@@ -55,7 +56,7 @@ function PostCard({
                         />
                     </>
                 ) : (
-                    <div className="absolute inset-0 bg-gray-200" />
+                    <ImagePlaceholder className="absolute inset-0" />
                 )}
             </div>
             <div className="border-t border-slate-200 demo-footer p-5 lg:text-2xl xl:text-2xl bg-white h-21 text-center">
